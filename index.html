@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="containerr">
+        <div class="container">
+          <div class="clock">
+            <span id="hrs">00</span>
+            <span>:</span>
+            <span id="min">00</span>
+            <span>:</span>
+            <span id="sec">00</span>
+            <span id="ampm">AM</span> <!-- Added AM/PM -->
+          </div>
+        </div>
+  
+        <div class="date">
+          <div class="top">
+            <p id="date">01</p>
+            <p id="day">Sunday</p>
+            <p id="month">January</p>
+            <p id="year">2020</p>
+          </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+
+            // Convert 24-hour format to 12-hour format
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+
+            // Pad single digit minutes and seconds with leading zero
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            // Update time
+            document.getElementById('hrs').textContent = hours;
+            document.getElementById('min').textContent = minutes;
+            document.getElementById('sec').textContent = seconds;
+            document.getElementById('ampm').textContent = ampm;
+
+            // Update date
+            document.getElementById('date').textContent = now.getDate();
+            document.getElementById('day').textContent = now.toLocaleString('en-us', { weekday: 'long' });
+            document.getElementById('month').textContent = now.toLocaleString('en-us', { month: 'long' });
+            document.getElementById('year').textContent = now.getFullYear();
+        }
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+        updateClock(); // initial call to display time immediately
+    </script>
+</body>
+</html>
